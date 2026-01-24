@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Админ-панель — Кусары Услуги</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <header class="topbar adminTopbar">
+    <div class="topbar__left">
+      <a class="adminBrand" href="/">Кусары Услуги</a>
+      <span class="adminChip">ADMIN</span>
+    </div>
+
+    <div class="topbar__center">
+      <input class="adminSearch" id="admSearch" type="search" placeholder="Поиск: заголовок, телефон, ID, владелец…" />
+    </div>
+
+    <div class="topbar__right">
+      <span class="adminUser" id="admUser">—</span>
+      <button class="btn" id="admLogout" type="button" hidden>Выйти</button>
+    </div>
+  </header>
+
+  <main class="adminMain">
+
+    <!-- LOGIN VIEW -->
+    <section class="adminCard" id="loginView">
+      <h2 class="adminTitle">Вход администратора</h2>
+      <p class="adminSub">Используй логин/e-mail и пароль администратора.</p>
+
+      <form id="loginForm" class="adminForm">
+        <label class="adminLabel">
+          <span>Логин / e-mail</span>
+          <input id="loginIdentifier" type="text" autocomplete="username" />
+        </label>
+
+        <label class="adminLabel">
+          <span>Пароль</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" />
+        </label>
+
+
+        <label class="authRemember" style="margin-top:6px">
+          <input id="loginRemember" type="checkbox" checked />
+          <span>Запомнить меня</span>
+        </label>
+
+        <div class="adminRow">
+          <button class="btn primary" type="submit">Войти</button>
+          <button class="btn" id="btnToSite" type="button">На сайт</button>
+        </div>
+
+        <div class="adminError" id="loginError" hidden></div>
+      </form>
+
+      <details class="adminHint">
+        <summary>Как создать/назначить админа</summary>
+        <div class="adminHint__body">
+          <ol>
+            <li>Открой файл <b>start_windows.bat</b> и добавь перед запуском две переменные окружения:</li>
+          </ol>
+          <pre class="code">set KUSARY_ADMIN_IDENTIFIER=admin
+set KUSARY_ADMIN_PASSWORD=strongpass</pre>
+          <p>После перезапуска сервера пользователь <b>admin</b> будет создан (или станет админом).</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- APP VIEW -->
+    <section class="adminWrap" id="appView" hidden>
+
+      <div class="adminTabs">
+        <button class="adminTab isOn" data-tab="ads" type="button">Объявления</button>
+        <button class="adminTab" data-tab="users" type="button">Пользователи</button>
+        <button class="adminTab" data-tab="logs" type="button">Логи</button>
+        <button class="adminTab" data-tab="tourism" type="button">Туризм</button>
+      </div>
+
+      <div class="adminToolbar" id="toolbarAds">
+        <select id="adsStatus" class="adminSelect">
+          <option value="all">Все</option>
+          <option value="pending">На модерации</option>
+          <option value="active">Активные</option>
+          <option value="hidden">Скрытые</option>
+        </select>
+        <button class="btn" id="btnRefresh" type="button">Обновить</button>
+      </div>
+
+      <div class="adminToolbar" id="toolbarUsers" hidden>
+        <button class="btn" id="btnRefreshUsers" type="button">Обновить</button>
+      </div>
+
+      <div class="adminToolbar" id="toolbarLogs" hidden>
+        <button class="btn" id="btnRefreshLogs" type="button">Обновить</button>
+      </div>
+
+      <div class="adminToolbar" id="toolbarTourism" hidden>
+        <select id="tourismSection" class="adminSelect">
+          <option value="all">Все разделы</option>
+          <option value="mountains">Горы</option>
+          <option value="parks">Парки</option>
+          <option value="sights">Достопримечательности</option>
+          <option value="restaurants">Рестораны</option>
+          <option value="hotels">Отели</option>
+          <option value="relax">Места для отдыха</option>
+        </select>
+        <button class="btn primary" id="btnAddTourism" type="button">+ Добавить публикацию</button>
+        <button class="btn" id="btnRefreshTourism" type="button">Обновить</button>
+      </div>
+
+      <div class="adminTableWrap" id="tableWrap"></div>
+
+    </section>
+
+  </main>
+
+
+  <!-- TOURISM MODAL -->
+  <div class="modal" id="tourismModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel">
+      <div class="modal__top">
+        <div class="modal__title" id="tourismModalTitle">Публикация</div>
+        <button class="btn icon" id="btnCloseTourismModal" type="button" data-close="1">✕</button>
+      </div>
+      <div class="modal__content">
+        <form id="tourismForm" class="adminForm">
+          <label class="adminLabel">
+            <span>Раздел</span>
+            <select id="tourismFormSection" class="adminSelect">
+              <option value="mountains">Горы</option>
+              <option value="parks">Парки</option>
+              <option value="sights">Достопримечательности</option>
+              <option value="restaurants">Рестораны</option>
+              <option value="hotels">Отели</option>
+              <option value="relax">Места для отдыха</option>
+            </select>
+          </label>
+
+          <label class="adminLabel">
+            <span>Заголовок</span>
+            <input id="tourismFormTitle" type="text" />
+          </label>
+
+          <label class="adminLabel">
+            <span>Текст</span>
+            <textarea id="tourismFormBody" rows="8" class="adminTextarea"></textarea>
+          </label>
+
+          <label class="adminLabel">
+            <span>Фото (можно несколько)</span>
+            <input id="tourismFormImages" type="file" accept="image/*" multiple />
+          </label>
+
+          <label class="authRemember" style="margin-top:6px">
+            <input id="tourismFormPublished" type="checkbox" checked />
+            <span>Опубликовано</span>
+          </label>
+
+          <div class="adminRow">
+            <button class="btn primary" type="submit">Сохранить</button>
+            <button class="btn" id="btnCancelTourism" type="button" data-close="1">Отмена</button>
+          </div>
+
+          <div class="adminError" id="tourismFormError" hidden></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="./admin.js"></script>
+</body>
+</html>

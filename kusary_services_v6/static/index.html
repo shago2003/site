@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кусары Услуги</title>
+
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Leaflet (карта выбора точки) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <button class="iconbtn" id="btnBack" aria-label="Назад" title="Назад">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14.5 5.5a1 1 0 0 1 0 1.4L10.4 11H20a1 1 0 1 1 0 2h-9.6l4.1 4.1a1 1 0 0 1-1.4 1.4l-5.8-5.8a1.2 1.2 0 0 1 0-1.7l5.8-5.8a1 1 0 0 1 1.4 0z"/>
+        </svg>
+      </button>
+
+      <button class="iconbtn" id="btnMenu" aria-label="Меню" title="Меню">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 7a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1zm1 4a1 1 0 1 0 0 2h12a1 1 0 1 0 0-2H6z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="topbar__center">
+      <div class="brand brand--mobileDots" aria-label="Кусары Услуги">
+        <span class="brand__dots" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+      </div>
+
+      <div class="searchrow">
+        <div class="brand brand--inline" aria-label="Кусары Услуги">
+          <span class="brand__dots" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <button class="brand__title brand__title--link" id="brandTitle" type="button" aria-label="На главную">Кусары Услуги</button>
+        </div>
+
+        <label class="search" aria-label="Поиск">
+          <input id="searchInput" type="search" placeholder="Поиск: квартира, работа, телефон…" />
+        </label>
+
+        <button class="btn primary" id="btnSearch" type="button">Найти</button>
+
+        <button class="btn" id="btnFilter" type="button">Фильтр</button>
+      </div>
+    </div>
+
+    <div class="topbar__right">
+      <!-- Кнопка языка (открывает попап) -->
+      <button class="btn ghost btn-lang" id="btnLang" type="button" aria-label="Смена языка">
+        RU
+      </button>
+
+      <button class="btn ghost" id="btnBrand" type="button">
+        <span class="logoDot" aria-hidden="true"></span>
+        <span id="brandChipText">Кусары</span>
+      </button>
+
+      <button class="btn ghost" id="btnAuth" type="button">Войти</button>
+
+      <button class="btn primary" id="btnCreate" type="button">Разместить</button>
+    </div>
+
+    <!-- POPUP языка -->
+    <div class="langpop" id="langPop" hidden>
+      <div class="langpop__title" id="langPopTitle">Язык</div>
+      <button class="langpop__item" type="button" data-lang="ru">
+        <span class="langpop__flag">🇷🇺</span>
+        <span class="langpop__name">Русский</span>
+        <span class="langpop__code">RU</span>
+      </button>
+      <button class="langpop__item" type="button" data-lang="az">
+        <span class="langpop__flag">🇦🇿</span>
+        <span class="langpop__name">Azərbaycanca</span>
+        <span class="langpop__code">AZ</span>
+      </button>
+      <button class="langpop__item" type="button" data-lang="en">
+        <span class="langpop__flag">🇬🇧</span>
+        <span class="langpop__name">English</span>
+        <span class="langpop__code">EN</span>
+      </button>
+      <button class="langpop__item" type="button" data-lang="ar">
+        <span class="langpop__flag">🇸🇦</span>
+        <span class="langpop__name">العربية</span>
+        <span class="langpop__code">AR</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <button class="menu__item" data-menu="home" id="menuHome">Главная</button>
+    <button class="menu__item" data-menu="create" id="menuCreate">Разместить</button>
+    <button class="menu__item" data-menu="favorites" id="menuFavorites">Избранные</button>
+    <button class="menu__item" data-menu="profile" id="menuProfile" hidden>Профиль</button>
+    <button class="menu__item" data-menu="login" id="menuLogin">Войти / Регистрация</button>
+    <button class="menu__item" data-menu="logout" id="menuLogout" hidden>Выйти</button>
+    <button class="menu__item" data-menu="lang" id="menuLang">Язык: RU</button>
+    <button class="menu__item" data-menu="clear" id="menuClear">Очистить объявления</button>
+  </div>
+
+  <main class="page">
+    <div class="container">
+
+      <section class="section" id="catsSection">
+        <div class="section__head">
+          <h2 id="sectionTitle">Категории</h2>
+          <button class="btn small" id="btnShowAllCats" type="button">Показать все</button>
+        </div>
+        <div id="grid" class="grid"></div>
+      </section>
+
+      <section class="section" id="adsSection">
+        <div class="section__head">
+          <h2 id="adsTitle">Новые объявления</h2>
+        </div>
+        <div id="ads" class="ads"></div>
+      </section>
+
+      <footer class="footnote" id="footnote">
+        Объявления и аккаунты сохраняются на сервере (файл app.db). Избранное и язык — в браузере.
+      </footer>
+    </div>
+  </main>
+
+  <!-- Модалка создания -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Разместить объявление">
+      <div class="modal__top">
+        <div class="modal__title" id="modalTitle">Разместить объявление</div>
+        <button class="iconbtn" id="btnCloseModal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 1 1-1.4-1.4l4.9-4.9-4.9-4.9a1 1 0 0 1 1.4-1.4l4.9 4.9 4.9-4.9a1 1 0 0 1 1.4 0z"/>
+          </svg>
+        </button>
+      </div>
+
+      <form id="createForm" class="form">
+        <div class="form__row">
+          <label class="field">
+            <span class="field__label" id="lblTitle">Заголовок</span>
+            <input name="title" id="inpTitle" type="text" placeholder="Например: Продам дом" required />
+          </label>
+        </div>
+
+        <div class="form__row">
+          <label class="field">
+            <span class="field__label" id="lblCategory">Категория</span>
+            <select name="categoryId" id="selectCategory" required></select>
+          </label>
+
+          <label class="field" id="subcatField">
+            <span class="field__label" id="lblSubcategory">Подкатегория</span>
+            <select name="subcategoryId" id="selectSubcategory"></select>
+          </label>
+        </div>
+
+        <div class="form__row" id="extraFieldsWrap" hidden></div>
+
+        <div class="form__row">
+          
+          <label class="field">
+            <span class="field__label" id="lblPhone">Номер телефона</span>
+            <div class="field__inline">
+              <select id="phoneCountry" name="phoneCountry" class="phonePrefix" aria-label="Страна">
+                <option value="AZ" selected>🇦🇿 +994</option>
+                <option value="RU">🇷🇺 +7</option>
+                <option value="SA">🇸🇦 +966</option>
+              </select>
+              <input name="phoneLocal" id="inpPhone" type="tel" placeholder="501234567" required />
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="field__label" id="lblPrice">Цена (только цифры)</span>
+            <input name="price" id="inpPrice" inputmode="numeric" pattern="[0-9]+" placeholder="Например: 1500000" required />
+          </label>
+        </div>
+
+        <div class="form__row">
+          <label class="field">
+            <span class="field__label" id="lblDesc">Описание</span>
+            <textarea name="desc" id="inpDesc" rows="4" placeholder="Опишите товар/услугу" required></textarea>
+          </label>
+        </div>
+
+        <div class="form__row" id="realtyLocationRow" hidden>
+<label class="field">
+            <span class="field__label" id="lblAddress">Адрес (для кнопки «На карте»)</span>
+            <input name="address" id="inpAddress" type="text" placeholder="Например: Кусары, ул. ... дом ..." />
+          </label>
+
+          <label class="field">
+            <span class="field__label" id="lblLocation">Местоположение</span>
+            <div class="field__inline">
+              <input name="coords" id="inpCoords" type="text" placeholder="Нажми «Показать на карте»" readonly />
+              <button class="btn small" type="button" id="btnPickMap">Показать на карте</button>
+            </div>
+            <div class="field__hint" id="locHint">Нажми на карту, чтобы выбрать точку. Координаты подставятся автоматически.</div>
+          </label>
+        </div>
+
+        <div class="form__row">
+          <label class="field">
+            <span class="field__label" id="lblPhoto">Фото</span>
+            <input name="photo" type="file" accept="image/*" />
+          </label>
+        </div>
+
+        <div class="form__actions">
+          <button class="btn" type="button" id="btnCancel">Отмена</button>
+          <button class="btn primary" type="submit" id="btnPublish">Опубликовать</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка выбора точки на карте -->
+  <div class="modal" id="mapModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel modal__panel--map" role="dialog" aria-modal="true" aria-label="Выбор места на карте">
+      <div class="modal__top">
+        <div class="modal__title" id="mapModalTitle">Выбрать место</div>
+        <button class="iconbtn" id="btnCloseMap" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 1 1-1.4-1.4l4.9-4.9-4.9-4.9a1 1 0 0 1 1.4-1.4l4.9 4.9 4.9-4.9a1 1 0 0 1 1.4 0z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mapTools">
+        <button class="btn small" type="button" id="btnMyLocation">Моё место</button>
+        <div class="mapHint" id="mapHint">Нажми на карту, чтобы выбрать точку</div>
+      </div>
+
+      <div id="leafletMap" class="leafletMap"></div>
+
+      <div class="form__actions mapActions">
+        <button class="btn" type="button" id="btnMapCancel">Отмена</button>
+        <button class="btn primary" type="button" id="btnMapUse">Использовать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка выбора подкатегории (внутри вкладки категории) -->
+  <div class="modal" id="subcatModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Подкатегории">
+      <div class="modal__top">
+        <div class="modal__title" id="subcatModalTitle">Подкатегории</div>
+        <button class="iconbtn" id="btnCloseSubcat" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 1 1-1.4-1.4l4.9-4.9-4.9-4.9a1 1 0 0 1 1.4-1.4l4.9 4.9 4.9-4.9a1 1 0 0 1 1.4 0z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="subcatList" id="subcatList"></div>
+    </div>
+  </div>
+
+  
+  <!-- Модалка входа / регистрации -->
+  <div class="modal authModal" id="authModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="authPanel" role="dialog" aria-modal="true" aria-label="Вход и регистрация">
+      <div class="authPanel__bg" aria-hidden="true"></div>
+
+      <div class="authPanel__content">
+        <div class="authTop">
+          <div class="authTitle" id="authTitle">Войти или зарегистрироваться</div>
+          <button class="iconbtn" id="btnCloseAuth" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 1 1-1.4-1.4l4.9-4.9-4.9-4.9a1 1 0 0 1 1.4-1.4l4.9 4.9 4.9-4.9a1 1 0 0 1 1.4 0z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="authLang" id="authLang" aria-label="Смена языка">
+          <button class="authLang__btn" type="button" data-lang="ru">RU</button>
+          <button class="authLang__btn" type="button" data-lang="az">AZ</button>
+          <button class="authLang__btn" type="button" data-lang="en">EN</button>
+          <button class="authLang__btn" type="button" data-lang="ar">AR</button>
+        </div>
+
+        <form id="authForm" class="authForm" autocomplete="on">
+          <label class="field field--auth">
+            <span class="field__label" id="authLblId">E-mail или логин</span>
+            <input id="authIdentifier" name="identifier" type="text" inputmode="email" placeholder="example@mail.com или user123" required>
+          </label>
+
+          <label class="field field--auth">
+            <span class="field__label" id="authLblPw">Пароль</span>
+            <input id="authPassword" name="password" type="password" placeholder="••••••••" required>
+          </label>
+
+
+        <label class="authRemember">
+          <input id="authRemember" type="checkbox" checked />
+          <span id="authRememberText">Запомнить меня</span>
+        </label>
+
+          <div class="authActions">
+            <button class="btn primary" id="btnDoRegister" type="button">Регистрация</button>
+            <button class="btn" id="btnDoLogin" type="button">Войти</button>
+          </div>
+
+          <div class="authError" id="authError" hidden></div>
+          <div class="authNote" id="authNote">Смотреть объявления можно без регистрации.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="./cars_data.js" defer></script>
+
+  <script src="./app.js" defer></script>
+
+  <!-- Модалка всех категорий -->
+  <div class="modal" id="catsModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel modal__panel--cats" role="dialog" aria-modal="true" aria-label="Все категории">
+      <div class="modal__top">
+        <div class="modal__title" id="catsModalTitle">Все категории</div>
+        <button class="iconbtn" id="btnCloseCatsModal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__content">
+        <div id="catsModalGrid" class="grid grid--catsModal"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Модалка фильтров (пустая вкладка) -->
+  <div class="modal" id="filterModal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Фильтр">
+      <div class="modal__top">
+        <div class="modal__title" id="filterModalTitle">Фильтр</div>
+        <button class="iconbtn" id="btnCloseFilterModal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body" id="filterModalBody"></div>
+    </div>
+  </div>
+
+
+
+  <!-- Мобильная нижняя навигация (только на телефоне) -->
+  <nav class="mnav" aria-label="Навигация">
+    <button class="mnav__item" id="mnavHome" type="button" aria-label="Главная">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 10.8 12 4l8 6.8V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span class="mnav__label" id="mnavHomeLabel">Главная</span>
+    </button>
+
+    <button class="mnav__item" id="mnavSearch" type="button" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 20l-3.6-3.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="mnav__label" id="mnavSearchLabel">Поиск</span>
+    </button>
+
+    <button class="mnav__add" id="mnavAdd" type="button" aria-label="Добавить">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5v14M5 12h14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <button class="mnav__item" id="mnavFav" type="button" aria-label="Избранные">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span class="mnav__label" id="mnavFavLabel">Избранные</span>
+    </button>
+
+    <button class="mnav__item" id="mnavProfile" type="button" aria-label="Профиль">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 20a8 8 0 0 0-16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="9" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span class="mnav__label" id="mnavProfileLabel">Профиль</span>
+    </button>
+  </nav>
+
+</body>
+</html>
