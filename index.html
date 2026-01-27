@@ -2,7 +2,7 @@
 <html lang="ru" dir="ltr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Кусары Услуги</title>
 
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
@@ -10,6 +10,11 @@
 
   <!-- Leaflet (карта выбора точки) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <header class="topbar">
@@ -111,7 +116,6 @@
       <section class="section" id="catsSection">
         <div class="section__head">
           <h2 id="sectionTitle">Категории</h2>
-          <button class="btn small" id="btnShowAllCats" type="button">Показать все</button>
         </div>
         <div id="grid" class="grid"></div>
       </section>
@@ -363,7 +367,28 @@
 
 
 
-  <!-- Мобильная нижняя навигация (только на телефоне) -->
+  
+<!-- Модалка публикации Туризма -->
+<div class="modal" id="tourismPostModal" hidden>
+  <div class="modal__backdrop" data-close="1"></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Публикация">
+    <div class="modal__top">
+      <div class="modal__title" id="tourismPostModalTitle">Публикация</div>
+      <button class="iconbtn" id="btnCloseTourismPostModal" aria-label="Закрыть" data-close="1">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal__content" style="padding-top:10px">
+      <div id="tourismPostModalMeta" style="opacity:.7;font-size:12px;margin:0 0 10px;"></div>
+      <div id="tourismPostModalBody" style="line-height:1.55"></div>
+      <div class="tourismPostModal__imgs" id="tourismPostModalImgs"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Мобильная нижняя навигация (только на телефоне) -->
   <nav class="mnav" aria-label="Навигация">
     <button class="mnav__item" id="mnavHome" type="button" aria-label="Главная">
       <svg viewBox="0 0 24 24" aria-hidden="true">
