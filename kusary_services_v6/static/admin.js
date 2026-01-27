@@ -401,7 +401,7 @@ function tourismBadge(isPublished){
 function openTourismModal(post){
   if (!tourismModal) return;
   editingTourismId = post ? String(post.id || "") : null;
-  editingTourismImages = Array.isArray(post?.images) ? post.images.filter(Boolean) : [];
+  editingTourismImages = Array.isArray(post?.images) ? post.images.filter(Boolean).slice(0,10) : [];
 
   if (tourismModalTitle) tourismModalTitle.textContent = editingTourismId ? `Публикация #${editingTourismId}` : "Новая публикация";
   if (tourismFormSection) tourismFormSection.value = post ? String(post.section || "mountains") : "mountains";
@@ -494,22 +494,81 @@ async function refreshTourism(){
   });
 }
 
-async function readFilesAsDataUrls(fileList){
-  const files = Array.from(fileList || []);
+async function fileToOptimizedJpegDataUrl(file, opts = {}){
+  const maxW = Number(opts.maxW || 1600);
+  const maxH = Number(opts.maxH || 900);
+  const quality = Math.min(0.95, Math.max(0.75, Number(opts.quality || 0.9)));
+  const targetAspect = Number(opts.aspect || (16/9));
+
+  if (!file || !(file instanceof File)) return "";
+  if (!String(file.type || "").startsWith("image/")) return "";
+  // защитимся от совсем огромных файлов
+  if (file.size > 20_000_000) return "";
+
+  const srcDataUrl = await new Promise((resolve) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result || ""));
+    r.onerror = () => resolve("");
+    r.readAsDataURL(file);
+  });
+  if (!srcDataUrl) return "";
+
+  const img = await new Promise((resolve) => {
+    const im = new Image();
+    im.onload = () => resolve(im);
+    im.onerror = () => resolve(null);
+    im.src = srcDataUrl;
+  });
+  if (!img) return "";
+
+  const sw = img.naturalWidth || img.width || 0;
+  const sh = img.naturalHeight || img.height || 0;
+  if (!sw || !sh) return "";
+
+  // center-crop к 16:9 (или другому)
+  const srcAspect = sw / sh;
+  let sx = 0, sy = 0, cw = sw, ch = sh;
+  if (srcAspect > targetAspect){
+    // шире чем надо -> режем по ширине
+    cw = Math.round(sh * targetAspect);
+    sx = Math.round((sw - cw) / 2);
+  } else if (srcAspect < targetAspect){
+    // выше чем надо -> режем по высоте
+    ch = Math.round(sw / targetAspect);
+    sy = Math.round((sh - ch) / 2);
+  }
+
+  // целевой размер
+  let tw = cw;
+  let th = ch;
+  const scale = Math.min(maxW / tw, maxH / th, 1);
+  tw = Math.round(tw * scale);
+  th = Math.round(th * scale);
+  if (tw < 320) { tw = 320; th = Math.round(320 / targetAspect); }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = tw;
+  canvas.height = th;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "";
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, sx, sy, cw, ch, 0, 0, tw, th);
+
+  try{
+    return canvas.toDataURL("image/jpeg", quality);
+  }catch(e){
+    return "";
+  }
+}
+
+async function readFilesAsOptimizedDataUrls(fileList){
+  const files = Array.from(fileList || []).filter(Boolean).slice(0, 10);
   const out = [];
   for (const f of files){
-    if (!f) continue;
-    if (f.size > 3_000_000){
-      // 3MB limit per image
-      continue;
-    }
     // eslint-disable-next-line no-await-in-loop
-    const data = await new Promise((resolve) => {
-      const r = new FileReader();
-      r.onload = () => resolve(String(r.result || ""));
-      r.onerror = () => resolve("");
-      r.readAsDataURL(f);
-    });
+    const data = await fileToOptimizedJpegDataUrl(f, { maxW: 1600, maxH: 900, quality: 0.9, aspect: 16/9 });
     if (data) out.push(data);
   }
   return out;
@@ -519,30 +578,38 @@ async function saveTourismPost(){
   showTourismError("");
 
   const section = String(tourismFormSection?.value || "").trim() || "mountains";
-  const title = String(tourismFormTitle?.value || "").trim();
-  const body = String(tourismFormBody?.value || "").trim();
   const is_published = !!tourismFormPublished?.checked;
 
+  const title = String(tourismFormTitle?.value || "").trim();
+  const body = String(tourismFormBody?.value || "").trim();
+
   if (!title){
-    showTourismError("Укажи заголовок.");
+    showTourismError("Добавь заголовок.");
     return;
   }
 
-  // If user selected new images — append them
+  // Фото: можно несколько. При выборе файлов — заменяем набор фото.
   if (tourismFormImages && tourismFormImages.files && tourismFormImages.files.length){
-    const newly = await readFilesAsDataUrls(tourismFormImages.files);
+    const newly = await readFilesAsOptimizedDataUrls(tourismFormImages.files);
     if (newly.length){
-      editingTourismImages = [...editingTourismImages, ...newly];
+      editingTourismImages = newly.slice(0, 10);
     } else {
-      showTourismError("Фото не добавлены (слишком большие или ошибка чтения). Лимит 3MB на фото.");
+      showTourismError("Фото не добавлены (слишком большие/неподдерживаемые или ошибка чтения).");
+      return;
     }
+  }
+
+  // Должно быть хотя бы одно фото
+  if (!Array.isArray(editingTourismImages) || editingTourismImages.length === 0){
+    showTourismError("Добавь фото.");
+    return;
   }
 
   const payload = {
     section,
     title,
     body,
-    images: editingTourismImages,
+    images: (Array.isArray(editingTourismImages) ? editingTourismImages.slice(0,10) : []),
     is_published
   };
 
@@ -555,6 +622,7 @@ async function saveTourismPost(){
   closeTourismModal();
   await refreshTourism();
 }
+
 
 function bindTourismModalEvents(){
   if (!tourismModal) return;

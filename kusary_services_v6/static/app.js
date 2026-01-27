@@ -75,7 +75,8 @@ const I18N = {
 
     sectionCats: "Категории",
     btnShowAll: "Показать все",
-    btnHide: "Скрыть",
+        btnShowOnMap: "Показать на карте",
+btnHide: "Скрыть",
     allCatsTitle: "Все категории",
 
     adsNew: "Новые объявления",
@@ -216,8 +217,9 @@ elecBrand: "Бренд",
     reviewLockedNote: "Отзыв уже отправлен. Изменять нельзя.",
     reviewNeedLogin: "Чтобы поставить оценку или написать комментарий — войдите.",
     ratingZero: "Без оценки",
-    ratingWord: "Рейтинг"
-
+    ratingWord: "Рейтинг",
+    catClothes: "Одежда",
+    subWorks: "Работы",
   },
 
   az: {
@@ -234,7 +236,8 @@ elecBrand: "Бренд",
 
     sectionCats: "Kateqoriyalar",
     btnShowAll: "Hamısını göstər",
-    btnHide: "Gizlət",
+        btnShowOnMap: "Xəritədə göstər",
+btnHide: "Gizlət",
     allCatsTitle: "Bütün kateqoriyalar",
 
     adsNew: "Yeni elanlar",
@@ -375,8 +378,9 @@ elecBrand: "Brend",
     reviewLockedNote: "Rəy artıq göndərilib. Dəyişmək olmaz.",
     reviewNeedLogin: "Qiymət vermək və şərh yazmaq üçün daxil olun.",
     ratingZero: "Qiymətsiz",
-    ratingWord: "Reytinq"
-
+    ratingWord: "Reytinq",
+    catClothes: "Geyim",
+    subWorks: "İşlər",
   },
 
   en: {
@@ -393,7 +397,8 @@ elecBrand: "Brend",
 
     sectionCats: "Categories",
     btnShowAll: "Show all",
-    btnHide: "Hide",
+        btnShowOnMap: "Show on map",
+btnHide: "Hide",
     allCatsTitle: "All categories",
 
     adsNew: "New listings",
@@ -534,8 +539,9 @@ elecBrand: "Brand",
     reviewLockedNote: "Review already submitted. You can’t edit it.",
     reviewNeedLogin: "Sign in to rate or comment.",
     ratingZero: "No rating",
-    ratingWord: "Rating"
-
+    ratingWord: "Rating",
+    catClothes: "Clothes",
+    subWorks: "Works",
   },
 
   ar: {
@@ -552,7 +558,8 @@ elecBrand: "Brand",
 
     sectionCats: "الفئات",
     btnShowAll: "عرض الكل",
-    btnHide: "إخفاء",
+        btnShowOnMap: "عرض على الخريطة",
+btnHide: "إخفاء",
     allCatsTitle: "كل الفئات",
 
     adsNew: "إعلانات جديدة",
@@ -662,8 +669,9 @@ elecBrand: "العلامة التجارية",
     reviewLockedNote: "تم إرسال المراجعة. لا يمكن التعديل.",
     reviewNeedLogin: "سجّل الدخول للتقييم أو التعليق.",
     ratingZero: "بدون تقييم",
-    ratingWord: "التقييم"
-
+    ratingWord: "التقييم",
+    catClothes: "ملابس",
+    subWorks: "أعمال",
   }
 };
 
@@ -703,16 +711,17 @@ const data = [
     ]
   },
   {
-    id: "jobs",
+    id: "clothes",
     featured: true,
-    icon: "./image/jobs.png",
-    name: { ru: "Работы", az: "İşlər", en: "Jobs", ar: "الأعمال" },
-    desc: { ru: "Услуги, ремонт, мастера", az: "Xidmət, təmir, ustalar", en: "Services & repairs", ar: "خدمات وصيانة" },
+    icon: "./image/clothes.png",
+    name: { ru: "Одежда", az: "Geyim", en: "Clothes", ar: "ملابس" },
+    desc: { ru: "Мужская, женская, обувь", az: "Kişi, qadın, ayaqqabı", en: "Men, women, shoes", ar: "رجالي، نسائي، أحذية" },
     subcats: [
-      { id: "repair", name: { ru: "Ремонт", az: "Təmir", en: "Repair", ar: "صيانة" } },
-      { id: "construction", name: { ru: "Строительство", az: "Tikinti", en: "Construction", ar: "بناء" } },
-      { id: "plumber", name: { ru: "Сантехник", az: "Santexnik", en: "Plumber", ar: "سباك" } },
-      { id: "electrician", name: { ru: "Электрик", az: "Elektrik", en: "Electrician", ar: "كهربائي" } },
+      { id: "women", name: { ru: "Женская", az: "Qadın", en: "Women", ar: "نسائي" } },
+      { id: "men", name: { ru: "Мужская", az: "Kişi", en: "Men", ar: "رجالي" } },
+      { id: "kids", name: { ru: "Детская", az: "Uşaq", en: "Kids", ar: "أطفال" } },
+      { id: "shoes", name: { ru: "Обувь", az: "Ayaqqabı", en: "Shoes", ar: "أحذية" } },
+      { id: "accessories", name: { ru: "Аксессуары", az: "Aksesuarlar", en: "Accessories", ar: "إكسسوارات" } },
       { id: "other", name: { ru: "Разное", az: "Digər", en: "Other", ar: "أخرى" } }
     ]
   },
@@ -768,6 +777,7 @@ const data = [
     name: { ru: "Услуги", az: "Xidmətlər", en: "Services", ar: "الخدمات" },
     desc: { ru: "Дом, уход, обучение, IT", az: "Ev, qayğı, təhsil, IT", en: "Home, care, education, IT", ar: "منزل، رعاية، تعليم، تقنية" },
     subcats: [
+      { id: "works", name: { ru: "Работы", az: "İşlər", en: "Works", ar: "أعمال" } },
       { id: "clean_home", name: { ru: "Уборка домов и квартир", az: "Ev və mənzil təmizliyi", en: "House & apartment cleaning", ar: "تنظيف المنازل والشقق" } },
       { id: "carpet_clean", name: { ru: "Химчистка ковров", az: "Xalça kimyəvi təmizləmə", en: "Carpet dry cleaning", ar: "تنظيف السجاد" } },
       { id: "yard_clean", name: { ru: "Уборка дворов", az: "Həyət təmizliyi", en: "Yard cleaning", ar: "تنظيف الساحات" } },
@@ -793,6 +803,16 @@ const data = [
     // ВИТРИНА "ПОПУЛЯРНЫЕ МЕСТА" (без подкатегорий)
     subcats: []
   },
+
+
+{
+  id: "hotels",
+  featured: true,
+  icon: "./image/hotels.png",
+  name: { ru: "Отели", az: "Otellər", en: "Hotels", ar: "فنادق" },
+  desc: { ru: "Гостиницы, гостевые дома", az: "Otellər, qonaq evləri", en: "Hotels & guest houses", ar: "فنادق وبيوت ضيافة" },
+  subcats: []
+},
 
   /* РЕСТОРАНЫ — ТЕПЕРЬ НА ГЛАВНОЙ */
   {
@@ -871,18 +891,23 @@ state.filters = loadFilters();
      она становится первой, а список обрезается до 8.
 */
 const HOME_CATS_KEY = "kusary_home_cats_v1";
-const MAX_HOME_CATS = 8;
+const MAX_HOME_CATS = 999;
+
 
 // Базовый порядок, который мы хотим видеть на главной (как в макете)
 const HOME_DEFAULT_ORDER = [
   "tourism",
+  "hotels",
   "restaurants",
   "transport",
   "realty",
-  "jobs",
+  "clothes",
   "animals",
   "kids",
-  "electronics"
+  "electronics",
+  "services",
+  "kitchenware",
+  "free"
 ];
 
 function uniqIds(arr){
@@ -895,10 +920,10 @@ function uniqIds(arr){
 }
 
 function getBaseHomeIds(){
-  const featured = new Set(data.filter(c => !!c.featured).map(c => c.id));
-  const ids = HOME_DEFAULT_ORDER.filter(id => featured.has(id));
-  // если вдруг появятся новые featured-категории — добавим в конец
-  data.filter(c => !!c.featured).forEach(c => { if (!ids.includes(c.id)) ids.push(c.id); });
+  const byId = new Map(data.map(c => [c.id, c]));
+  const ids = HOME_DEFAULT_ORDER.filter(id => byId.has(id));
+  // append any new categories to the end
+  data.forEach(c => { if (c && c.id && !ids.includes(c.id)) ids.push(c.id); });
   return ids;
 }
 
@@ -994,6 +1019,14 @@ const filterModal = document.getElementById("filterModal");
 const filterModalTitle = document.getElementById("filterModalTitle");
 const filterModalBody = document.getElementById("filterModalBody");
 const btnCloseFilterModal = document.getElementById("btnCloseFilterModal");
+
+/* tourism post modal */
+const tourismPostModal = document.getElementById("tourismPostModal");
+const tourismPostModalTitle = document.getElementById("tourismPostModalTitle");
+const tourismPostModalMeta = document.getElementById("tourismPostModalMeta");
+const tourismPostModalBody = document.getElementById("tourismPostModalBody");
+const tourismPostModalImgs = document.getElementById("tourismPostModalImgs");
+const btnCloseTourismPostModal = document.getElementById("btnCloseTourismPostModal");
 
 /* subcategory modal (inside category tab) */
 const subcatModal = document.getElementById("subcatModal");
@@ -1121,9 +1154,11 @@ async function init() {
   bindMobileNav();
   updateMobileNavActiveFromState();
 
-  btnShowAllCats.addEventListener("click", () => {
-    openCatsModal();
-  });
+  if (btnShowAllCats) {
+    btnShowAllCats.addEventListener("click", () => {
+      openCatsModal();
+    });
+  }
 
   if (btnCloseCatsModal) {
     btnCloseCatsModal.addEventListener("click", closeCatsModal);
@@ -1142,6 +1177,16 @@ async function init() {
       if (e.target && e.target.getAttribute("data-close") === "1") closeFilterModal();
     });
   }
+
+  if (btnCloseTourismPostModal) {
+    btnCloseTourismPostModal.addEventListener("click", closeTourismPostModal);
+  }
+  if (tourismPostModal) {
+    tourismPostModal.addEventListener("click", (e) => {
+      if (e.target && e.target.getAttribute("data-close") === "1") closeTourismPostModal();
+    });
+  }
+
 btnBack.addEventListener("click", () => {
     if (state.view === "ad") {
       state.view = state.returnView || "home";
@@ -1345,11 +1390,24 @@ btnBack.addEventListener("click", () => {
     renderCurrentView(searchInput.value);
   });
 
-  btnSearch.addEventListener("click", () => renderCurrentView(searchInput.value));
+  btnSearch.addEventListener("click", () => {
+    const q = String(searchInput.value || "").trim();
+    // глобальный поиск: из любого экрана возвращаемся на главную
+    state.view = "home";
+    state.currentCatId = "";
+    state.currentSubId = "";
+    renderCurrentView(q);
+  });
 
   if (btnFilter) btnFilter.addEventListener("click", openFilterModal);
   searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") renderCurrentView(searchInput.value);
+    if (e.key === "Enter"){
+      const q = String(searchInput.value || "").trim();
+      state.view = "home";
+      state.currentCatId = "";
+      state.currentSubId = "";
+      renderCurrentView(q);
+    }
   });
 }
 
@@ -1447,13 +1505,101 @@ function applyLanguageToStaticUI(){
   btnMapUse.textContent = t("mapUseBtn");
   btnMapCancel.textContent = t("mapCancelBtn");
 
+  // меню больше не показывает список категорий (по просьбе пользователя)
+
   // для категории "Работы" показываем "Зарплата"
   updateCreatePriceLabelByCategory();
   setRealtyLocationVisibility(String(selectCategory?.value || "") === "realty");
 }
 
 function applyShowAllButtonText(){
-  btnShowAllCats.textContent = t("btnShowAll");}
+  if (btnShowAllCats) btnShowAllCats.textContent = t("btnShowAll");
+}
+
+
+/* ===== Меню: быстрые категории ===== */
+function buildMenuCategories(){
+  if (!menu) return;
+
+  // remove previous dynamic block
+  const old = document.getElementById("menuCatsDynamic");
+  if (old) old.remove();
+
+  const wrap = document.createElement("div");
+  wrap.id = "menuCatsDynamic";
+
+  const title = document.createElement("div");
+  title.className = "menu__section";
+  title.textContent = t("sectionCats");
+  wrap.appendChild(title);
+
+  // dedicated tab: Hotels (Tourism)
+  const hotelsBtn = document.createElement("button");
+  hotelsBtn.className = "menu__item menu__item--cat";
+  hotelsBtn.type = "button";
+  hotelsBtn.setAttribute("data-menu", "tourism_hotels");
+  hotelsBtn.textContent = t("tourismHotels");
+  wrap.appendChild(hotelsBtn);
+
+  // ordered categories (home order first)
+  const byId = new Map(data.map(c => [c.id, c]));
+  const ordered = [];
+  HOME_DEFAULT_ORDER.forEach(id => {
+    const c = byId.get(id);
+    if (c && !ordered.includes(c)) ordered.push(c);
+  });
+  data.forEach(c => { if (c && c.id && !ordered.includes(c)) ordered.push(c); });
+
+  ordered.forEach(cat => {
+    const b = document.createElement("button");
+    b.className = "menu__item menu__item--cat";
+    b.type = "button";
+    b.setAttribute("data-menu", "cat");
+    b.setAttribute("data-cat-id", cat.id);
+    b.textContent = getCatName(cat);
+    wrap.appendChild(b);
+  });
+
+  const before = document.getElementById("menuClear");
+  if (before) menu.insertBefore(wrap, before);
+  else menu.appendChild(wrap);
+
+  bindMenuItemButtons();
+}
+
+function bindMenuItemButtons(){
+  if (!menu) return;
+  menu.querySelectorAll("[data-menu]").forEach((b) => {
+    if (b.dataset.bound === "1") return;
+    b.dataset.bound = "1";
+
+    b.addEventListener("click", () => {
+      const act = b.getAttribute("data-menu");
+
+      if (act === "home") goHome();
+      if (act === "create") openModal();
+      if (act === "favorites") openFavorites();
+      if (act === "lang") toggleLangPop();
+      if (act === "profile") openProfile();
+      if (act === "login") openAuthModal();
+      if (act === "logout") doLogout();
+      if (act === "cat") {
+        const catId = b.getAttribute("data-cat-id") || "";
+        if (catId) openSubcats(catId);
+      }
+      if (act === "tourism_hotels") {
+        openTourismPlace("hotels");
+      }
+      if (act === "clear") {
+        lsRemove(LS_KEY);
+        lsRemove(LS_FAV);
+        goHome();
+      }
+
+      hideMenu();
+    });
+  });
+}
 
 function toggleLangPop(){
   langPop.hidden ? showLangPop() : hideLangPop();
@@ -1630,8 +1776,7 @@ function renderGrid() {
   catsSection.classList.remove("is-tourism");
   // сбрасываем спец-сетку витрины
   elGrid.classList.remove("grid--places", "grid--one");
-
-  btnShowAllCats.style.display = (state.view === "home") ? "" : "none";
+  if (btnShowAllCats) btnShowAllCats.style.display = (state.view === "home") ? "" : "none";
 
   if (state.view === "home") {
     elSectionTitle.textContent = t("sectionCats");
@@ -1662,12 +1807,12 @@ function renderGrid() {
       img.loading = "lazy";
       const coverIcons = [
         "tourism.png",
-        "jobs.png",
-        "transport.png",
+          "transport.png",
         "services.png",
         "realty.png",
         "animals.png",
         "kids.png",
+      "clothes.png",
         "electronics.png",
         "free.png",
         "restaurants.png"
@@ -1755,7 +1900,7 @@ function renderGrid() {
 }
 
 function openSubcats(catId) {
-  bumpCatStats(catId);
+bumpCatStats(catId);
   pinHomeCat(catId);
   state.view = "subcats";
   state.currentCatId = catId;
@@ -1859,6 +2004,289 @@ function openTourismPlace(placeKey) {
 }
 
 
+
+// ===== Tourism Gallery (центр фото + стрелки + альбом) =====
+const TOURISM_GALLERY = {
+  mountains: {
+    images: ["./image/shahdag_1.jpg","./image/shahdag_2.jpg"],
+    address: "Şahdağ Mountain Resort"
+  },
+  parks: {
+    images: ["./image/tourism_parks.png"],
+    address: "Qusar park"
+  },
+  sights: {
+    images: ["./image/tourism_sights.png"],
+    address: "Qusar, Azerbaijan"
+  },
+  restaurants: {
+    images: ["./image/tourism_restaurants_custom.jpg","./image/tourism_restaurants.jpg"],
+    address: "Qusar restoran"
+  },
+  hotels: {
+    images: ["./image/tourism_hotels_custom.jpg","./image/tourism_hotels.jpg"],
+    address: "Qusar hotel"
+  },
+  relax: {
+    images: ["./image/tourism.png"],
+    address: "Qusar"
+  }
+};
+
+function openTourismAlbumModal(placeKey, images){
+  const old = document.getElementById("tourismAlbumModal");
+  if (old) old.remove();
+
+  const wrap = document.createElement("div");
+  wrap.id = "tourismAlbumModal";
+  wrap.className = "modal";
+  wrap.innerHTML = `
+    <div class="modal__overlay" data-close="1"></div>
+    <div class="modal__dialog tourismAlbum">
+      <div class="modal__header">
+        <div class="modal__title">${escapeHtml(t("btnShowAll") || "Показать все")}</div>
+        <button class="modal__close" id="taClose" aria-label="Close">×</button>
+      </div>
+      <div class="tourismAlbum__grid">
+        ${images.map((src, i) => `
+          <button class="tourismAlbum__thumb" type="button" data-src="${src}" aria-label="Фото ${i+1}">
+            <img src="${src}" alt="Фото ${i+1}" loading="lazy">
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(wrap);
+  lockBodyScroll(true);
+
+  const close = () => { try{ wrap.remove(); }catch{}; lockBodyScroll(false); };
+  wrap.addEventListener("click", (e) => {
+    if (e.target && e.target.getAttribute && e.target.getAttribute("data-close") === "1") close();
+  });
+  const b = wrap.querySelector("#taClose");
+  if (b) b.addEventListener("click", close);
+
+  wrap.querySelectorAll(".tourismAlbum__thumb").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const src = btn.getAttribute("data-src") || "";
+      if (!src) return;
+      try{ window.open(src, "_blank"); }catch{}
+    });
+  });
+}
+
+
+function renderTourismGallery(placeKey, hostEl){
+  const intro = getTourismSectionIntro(placeKey);
+  const cfg = TOURISM_GALLERY[placeKey] || {};
+  const baseImages = Array.isArray(cfg.images) ? cfg.images.filter(Boolean) : [];
+  const address = cfg.address || "";
+
+  const getPlaceTitle = (key) => {
+    const map = {
+      mountains: t("tourismMountains"),
+      parks: t("tourismParks"),
+      sights: t("tourismSights"),
+      restaurants: t("tourismRestaurants"),
+      hotels: t("tourismHotels"),
+      relax: t("tourismRelax")
+    };
+    return String(map[key] || "Туризм");
+  };
+
+  const placeTitle = getPlaceTitle(placeKey);
+
+  const makeSnippet = (text, maxLen = 140) => {
+    const oneLine = String(text || "").replace(/\s*\r?\n\s*/g, " ").trim();
+    if (!oneLine) return "";
+    return oneLine.length > maxLen ? (oneLine.slice(0, maxLen) + "…") : oneLine;
+  };
+
+  // 1 слайд = 1 публикация (берём первое фото), базовые фото тоже показываем
+  const slides = [];
+  const basePost = {
+    title: placeTitle,
+    body: intro || "",
+    images: baseImages.slice(),
+    section: placeKey,
+    created_at: null
+  };
+
+  baseImages.forEach((src) => {
+    slides.push({
+      src,
+      title: placeTitle,
+      desc: makeSnippet(intro, 160),
+      post: basePost
+    });
+  });
+
+  let idx = 0;
+  let currentSlide = null;
+
+  hostEl.innerHTML = `
+    ${intro ? `<div class="tourismDetail__intro">${escapeHtml(intro)}</div>` : ``}
+
+    <div class="tourismGalleryA">
+      <div class="tga__frame">
+        <button class="tga__arrow tga__arrow--left" type="button" aria-label="Prev">‹</button>
+        <img class="tga__img" id="tgaImg" alt="Photo" loading="eager">
+        <button class="tga__arrow tga__arrow--right" type="button" aria-label="Next">›</button>
+
+        <div class="tga__caption" id="tgaCaption" hidden>
+          <div class="tga__capText">
+            <div class="tga__capTitle" id="tgaCapTitle"></div>
+            <div class="tga__capDesc" id="tgaCapDesc"></div>
+          </div>
+          <button class="tga__more" id="tgaMore" type="button">Подробнее</button>
+        </div>
+      </div>
+
+      <div class="tga__actions">
+        <button class="btn btn--primary" type="button" id="tgaShowMap">${escapeHtml(t("btnShowOnMap") || "Показать на карте")}</button>
+      </div>
+    </div>
+  `;
+
+  const imgEl = hostEl.querySelector("#tgaImg");
+  const bL = hostEl.querySelector(".tga__arrow--left");
+  const bR = hostEl.querySelector(".tga__arrow--right");
+
+  const cap = hostEl.querySelector("#tgaCaption");
+  const capTitle = hostEl.querySelector("#tgaCapTitle");
+  const capDesc = hostEl.querySelector("#tgaCapDesc");
+  const bMore = hostEl.querySelector("#tgaMore");
+
+  const clampIdx = () => {
+    if (idx < 0) idx = 0;
+    if (idx > slides.length - 1) idx = slides.length - 1;
+    if (idx < 0) idx = 0;
+  };
+
+  const syncArrows = () => {
+    const showArrows = slides.length > 1;
+    if (bL) bL.style.display = showArrows ? "" : "none";
+    if (bR) bR.style.display = showArrows ? "" : "none";
+  };
+
+  const setSlide = () => {
+    if (!imgEl) return;
+
+    if (slides.length === 0){
+      imgEl.removeAttribute("src");
+      imgEl.alt = "No photo";
+      if (cap) cap.hidden = true;
+      syncArrows();
+      return;
+    }
+
+    clampIdx();
+    currentSlide = slides[idx] || null;
+
+    const src = currentSlide?.src || "";
+    imgEl.src = src;
+    imgEl.alt = currentSlide?.title ? String(currentSlide.title) : "Photo";
+
+    const ttl = String(currentSlide?.title || "").trim();
+    const dsc = String(currentSlide?.desc || "").trim();
+
+    if (capTitle) capTitle.textContent = ttl || "";
+    if (capDesc) capDesc.textContent = dsc || "";
+
+    const showCaption = Boolean(ttl || dsc);
+    if (cap) cap.hidden = !showCaption;
+
+    // Подробнее показываем только если есть post (у базовых тоже есть basePost)
+    if (bMore) bMore.style.display = currentSlide?.post ? "" : "none";
+
+    syncArrows();
+  };
+
+  const prev = () => {
+    if (slides.length <= 1) return;
+    idx = (idx - 1 + slides.length) % slides.length;
+    setSlide();
+  };
+  const next = () => {
+    if (slides.length <= 1) return;
+    idx = (idx + 1) % slides.length;
+    setSlide();
+  };
+
+  if (bL) bL.addEventListener("click", prev);
+  if (bR) bR.addEventListener("click", next);
+
+  // Подробнее (открываем модалку публикации)
+  if (bMore) bMore.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!currentSlide?.post) return;
+    openTourismPostModal(currentSlide.post);
+  });
+
+  // Map button
+  const bMap = hostEl.querySelector("#tgaShowMap");
+  if (bMap) bMap.addEventListener("click", () => {
+    const url = buildMapUrl({ address });
+    if (!url) return;
+    try{ window.open(url, "_blank"); }catch{}
+  });
+
+  // initial render (показываем хотя бы базовые фото)
+  setSlide();
+
+  // ===== Подмешиваем опубликованные публикации из админки (как слайды) =====
+  (async () => {
+    try{
+      const posts = await apiJson(`/api/tourism/posts?section=${encodeURIComponent(placeKey)}&limit=50`);
+      const arr = Array.isArray(posts) ? posts : [];
+
+      if (arr.length === 0) return;
+
+      const postSlides = [];
+      arr.forEach((p) => {
+        const imgs = Array.isArray(p?.images) ? p.images.filter(Boolean) : [];
+        const firstImg = imgs[0] || "";
+        if (!firstImg) return;
+
+        const title = String(p?.title || "").trim() || "Публикация";
+        const body = String(p?.body || "");
+        postSlides.push({
+          src: firstImg,
+          title,
+          desc: makeSnippet(body, 160),
+          post: p
+        });
+      });
+
+      if (postSlides.length === 0) return;
+
+      // сначала публикации (новые), потом базовые
+      const seen = new Set();
+      const merged = [];
+      postSlides.concat(slides).forEach(sl => {
+        const k = String(sl?.src || "");
+        if (!k) return;
+        if (seen.has(k)) return;
+        seen.add(k);
+        merged.push(sl);
+      });
+
+      slides.length = 0;
+      slides.push(...merged);
+
+      // если слайдов стало меньше — поправим индекс
+      if (idx >= slides.length) idx = 0;
+
+      setSlide();
+    }catch(e){
+      // молча (галерея должна работать и без публикаций)
+    }
+  })();
+}
+
+
+
 function getTourismSectionIntro(placeKey) {
   const ru = {
     mountains: "ШахДаг и горы рядом с Кусарами — одно из самых популярных направлений. Зимой здесь держится снег и работает горнолыжная инфраструктура, а летом люди едут за панорамами Большого Кавказа, прогулками и фототочками.",
@@ -1872,109 +2300,123 @@ function getTourismSectionIntro(placeKey) {
 }
 
 function openTourismPostModal(post){
-  // лёгкий модал без зависимостей
-  const old = document.getElementById("tourismPostModal");
-  if (old) old.remove();
+  if (!tourismPostModal) return;
 
-  const imgs = Array.isArray(post?.images) ? post.images.filter(Boolean) : [];
-  const photos = imgs.map((src, idx) => {
-    const cls = idx === 0 ? "tourismDetail__photo tourismDetail__photo--main" : "tourismDetail__photo tourismDetail__photo--secondary";
-    const label = `${post.title || ""} — фото ${idx + 1}`;
-    return `<div class="${cls}" style="background-image:url('${src}')" role="button" tabindex="0" data-src="${src}" aria-label="${escapeHtml(label)}"></div>`;
-  }).join("");
+  const title = String(post?.title || "").trim();
+  if (tourismPostModalTitle) tourismPostModalTitle.textContent = title || "Публикация";
 
-  const wrap = document.createElement("div");
-  wrap.id = "tourismPostModal";
-  wrap.className = "modal";
-  wrap.innerHTML = `
-    <div class="modal__backdrop" data-close="1"></div>
-    <div class="modal__panel">
-      <div class="modal__top">
-        <div class="modal__title">${escapeHtml(post.title || "")}</div>
-        <button class="iconBtn" type="button" id="tpClose" aria-label="Close">✕</button>
-      </div>
-      <div class="modal__body">
-        <div class="modal__content">
-          ${photos ? `<div class="tourismDetail__photos">${photos}</div>` : ``}
-          <div class="tourismPost__body">${escapeHtml(post.body || "").replaceAll("\n", "<br>")}</div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(wrap);
+  const meta = [];
+  if (post?.created_at) meta.push(formatDateTime(post.created_at));
+  if (post?.section) meta.push(String(post.section));
+  if (tourismPostModalMeta) tourismPostModalMeta.textContent = meta.join(" • ");
+
+  if (tourismPostModalBody){
+    const body = String(post?.body || "");
+    // переносы строк показываем как <br>
+    tourismPostModalBody.innerHTML = escapeHtml(body).replaceAll("\n", "<br>");
+  }
+
+  if (tourismPostModalImgs){
+    tourismPostModalImgs.innerHTML = "";
+    const imgs = Array.isArray(post?.images) ? post.images.filter(Boolean) : [];
+    imgs.forEach((src) => {
+      const div = document.createElement("div");
+      div.className = "tourismPostModal__img";
+      div.style.backgroundImage = `url('${src}')`;
+      div.setAttribute("role", "button");
+      div.tabIndex = 0;
+      div.addEventListener("click", () => { try{ window.open(src, "_blank"); }catch{} });
+      div.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { try{ window.open(src, "_blank"); }catch{} } });
+      tourismPostModalImgs.appendChild(div);
+    });
+  }
+
+  tourismPostModal.hidden = false;
   lockBodyScroll(true);
+}
 
-  const close = () => { try{ wrap.remove(); }catch{}; lockBodyScroll(false); };
-  wrap.addEventListener("click", (e) => {
-    if (e.target && e.target.getAttribute && e.target.getAttribute("data-close") === "1") close();
-  });
-  const b = wrap.querySelector("#tpClose");
-  if (b) b.addEventListener("click", close);
+function closeTourismPostModal(){
+  if (!tourismPostModal) return;
+  tourismPostModal.hidden = true;
+  lockBodyScroll(false);
+}
 
-  wrap.querySelectorAll(".tourismDetail__photo").forEach((photo) => {
-    const src = photo.getAttribute("data-src") || "";
-    const open = () => { try{ window.open(src, "_blank"); }catch{} };
-    photo.addEventListener("click", open);
-    photo.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(); });
-  });
+async function loadAndRenderTourismPosts(placeKey, listEl){
+  if (!listEl) return;
+
+  listEl.style.display = "";
+  listEl.innerHTML = `<div class="empty"><div><div class="empty__text">Загрузка публикаций…</div></div></div>`;
+
+  try{
+    const posts = await apiJson(`/api/tourism/posts?section=${encodeURIComponent(placeKey)}&limit=50`);
+    const arr = Array.isArray(posts) ? posts : [];
+
+    if (arr.length === 0){
+      listEl.innerHTML = `<div class="empty"><div><div class="empty__text">Публикаций пока нет</div><div class="empty__sub">Добавь публикацию в админке и нажми «Опубликовать».</div></div></div>`;
+      return;
+    }
+
+    listEl.innerHTML = "";
+    arr.forEach((post) => {
+      const card = document.createElement("div");
+      card.className = "tourismPostCard";
+
+      const firstImg = (Array.isArray(post.images) && post.images[0]) ? post.images[0] : "";
+      const title = String(post.title || "").trim();
+      const body = String(post.body || "");
+      const oneLine = body.replaceAll("\n", " ").trim();
+      const snippet = oneLine.length > 120 ? (oneLine.slice(0, 120) + "…") : oneLine;
+      const dt = post?.created_at ? formatDateTime(post.created_at) : "";
+
+      card.innerHTML = `
+        <div class="tourismPostCard__cover" style="${firstImg ? `background-image:url('${firstImg}')` : ""}">
+          <div class="tourismPostCard__overlay">
+            <div class="tourismPostCard__title">${escapeHtml(title || "Публикация")}</div>
+            ${snippet ? `<div class="tourismPostCard__text">${escapeHtml(snippet)}</div>` : ``}
+            <div class="tourismPostCard__bottom">
+              <div class="tourismPostCard__meta">${escapeHtml(dt)}</div>
+              <button class="btn tourismPostCard__more" type="button">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const open = () => openTourismPostModal(post);
+      card.addEventListener("click", open);
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(); });
+      card.setAttribute("role","button");
+      card.tabIndex = 0;
+
+      const more = card.querySelector(".tourismPostCard__more");
+      if (more) more.addEventListener("click", (e) => { e.stopPropagation(); open(); });
+
+      listEl.appendChild(card);
+    });
+  }catch(e){
+    listEl.innerHTML = `<div class="empty"><div><div class="empty__text">Не удалось загрузить публикации</div><div class="empty__sub">${escapeHtml(e.message || "Ошибка")}</div></div></div>`;
+  }
 }
 
 function renderTourismPlacePage(placeKey) {
   elGrid.innerHTML = "";
 
-  const intro = getTourismSectionIntro(placeKey);
-
   const wrap = document.createElement("div");
   wrap.className = "tourismSection";
   wrap.innerHTML = `
-    ${intro ? `<div class="tourismDetail__intro">${escapeHtml(intro)}</div>` : ``}
-    <div class="tourismPostList" id="tourismPostList">${escapeHtml(t("loading") || "Загрузка…")}</div>
+    <div id="tourismGalleryHost"></div>
+    <div class="tourismPostList" id="tourismPostList" style="display:none;"></div>
   `;
   elGrid.appendChild(wrap);
 
-  const listEl = wrap.querySelector("#tourismPostList");
+  // Новый вид: фото по центру + стрелки + кнопки
+  const host = wrap.querySelector("#tourismGalleryHost");
+  renderTourismGallery(placeKey, host);
 
-  (async () => {
-    try{
-      const params = new URLSearchParams();
-      if (placeKey) params.set("section", placeKey);
-      const posts = await apiJson(`/api/tourism/posts?${params.toString()}`);
-      if (!Array.isArray(posts) || posts.length === 0){
-        listEl.innerHTML = `<div class="adminEmpty">Публикаций пока нет.</div>`;
-        return;
-      }
+  const postList = wrap.querySelector("#tourismPostList");
+  loadAndRenderTourismPosts(placeKey, postList);
 
-      const cards = posts.map((p) => {
-        const cover = Array.isArray(p.images) && p.images[0] ? p.images[0] : "";
-        const excerpt = String(p.body || "").trim().slice(0, 180);
-        return `
-          <div class="tourismPostCard" role="button" tabindex="0" data-tpid="${escapeHtml(p.id)}">
-            <div class="tourismPostCard__img" style="background-image:url('${cover}')"></div>
-            <div class="tourismPostCard__meta">
-              <div class="tourismPostCard__title">${escapeHtml(p.title || "")}</div>
-              <div class="tourismPostCard__text">${escapeHtml(excerpt)}${excerpt.length >= 180 ? "…" : ""}</div>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      listEl.innerHTML = cards;
-
-      // click
-      listEl.querySelectorAll(".tourismPostCard").forEach((card) => {
-        const id = card.getAttribute("data-tpid");
-        const post = posts.find(x => String(x.id) === String(id));
-        if (!post) return;
-        const open = () => openTourismPostModal(post);
-        card.addEventListener("click", open);
-        card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(); });
-      });
-
-    }catch(e){
-      listEl.innerHTML = `<div class="adminEmpty">Ошибка загрузки.</div>`;
-    }
-  })();
 }
+
 
 
 function renderCategoryRecommendations(cat, query = "") {
@@ -2096,7 +2538,7 @@ function renderAdView(adId){
       <div class="adview__buttons">
         ${hasMap ? `<a class="btn" href="${escapeHtmlAttr(mapUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("mapBtn"))}</a>` : ``}
         ${telHref ? `<a class="btn primary" href="${escapeHtmlAttr(telHref)}">${escapeHtml(t("callBtn"))}</a>` : ``}
-        ${waHref ? `<a class="btn" href="${escapeHtmlAttr(waHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("waBtn"))}</a>` : ``}
+        ${waHref ? `<a class="btn wa" href="${escapeHtmlAttr(waHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("waBtn"))}</a>` : ``}
         <button class="btn ${isFav ? "favActive" : ""}" type="button" id="btnFavToggle">
           ${escapeHtml(isFav ? t("favRemove") : t("favAdd"))}
         </button>
@@ -2428,9 +2870,6 @@ function setRealtyLocationVisibility(isRealty){
 }
 
 function getPriceRowLabels(catId){
-  if (catId === "jobs") {
-    return { min: t("filterSalaryMin"), max: t("filterSalaryMax") };
-  }
   return { min: t("filterPriceMin"), max: t("filterPriceMax") };
 }
 
@@ -2923,12 +3362,12 @@ function renderCatsModal(){
     // Крупные «обложки»-иконки (3D) лучше смотрятся как cover (без лишних белых полей)
     const coverIcons = [
       "tourism.png",
-      "jobs.png",
       "transport.png",
       "services.png",
       "realty.png",
       "animals.png",
       "kids.png",
+      "clothes.png",
       "electronics.png",
       "free.png",
       "restaurants.png"
@@ -3248,14 +3687,8 @@ function fillSubcategorySelect(catId) {
 /* ===== Доп.поля для размещения (по категории) ===== */
 function updateCreatePriceLabelByCategory(){
   if (!lblPrice || !inpPrice) return;
-  const catId = String(selectCategory?.value || "");
-  if (catId === "jobs") {
-    lblPrice.textContent = t("lblSalary");
-    inpPrice.placeholder = t("phSalary");
-  } else {
-    lblPrice.textContent = t("lblPrice");
-    inpPrice.placeholder = t("phPrice");
-  }
+  lblPrice.textContent = t("lblPrice");
+  inpPrice.placeholder = t("phPrice");
 }
 
 function renderCreateExtraFields(){
@@ -3646,6 +4079,21 @@ function formatDate(dt){
   }
 }
 
+
+function formatDateTime(isoStr){
+  if (!isoStr) return "";
+  const dt = new Date(isoStr);
+  if (isNaN(dt.getTime())) return "";
+  const d = formatDate(dt);
+  try{
+    const t = dt.toLocaleTimeString((lang === "en") ? "en-GB" : (lang === "az") ? "az-Latn-AZ" : (lang === "ar") ? "ar" : "ru-RU", { hour: "2-digit", minute: "2-digit" });
+    return t ? (d + " " + t) : d;
+  }catch{
+    return d;
+  }
+}
+
+
 /* ===== Миграция старых объявлений ===== */
 function migrateLegacyAds(){
   const already = lsGet(LS_KEY);
@@ -3694,7 +4142,7 @@ function mapLegacyCategory(catStr, subStr){
   if (!cat) {
     if (c.includes("недвиж") || c.includes("əmlak") || c.includes("real")) cat = data.find(x => x.id === "realty");
     else if (c.includes("трансп") || c.includes("nəql") || c.includes("transport")) cat = data.find(x => x.id === "transport");
-    else if (c.includes("работ") || c.includes("iş") || c.includes("job")) cat = data.find(x => x.id === "jobs");
+    else if (c.includes("работ") || c.includes("iş") || c.includes("job")) cat = data.find(x => x.id === "services");
     else if (c.includes("живот") || c.includes("heyvan") || c.includes("animal")) cat = data.find(x => x.id === "animals");
     else if (c.includes("дет") || c.includes("uşaq") || c.includes("kid")) cat = data.find(x => x.id === "kids");
     else if (c.includes("элект") || c.includes("elektr") || c.includes("elect")) cat = data.find(x => x.id === "electronics");

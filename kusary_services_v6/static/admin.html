@@ -2,10 +2,15 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Админ-панель — Кусары Услуги</title>
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./admin.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <header class="topbar adminTopbar">
@@ -142,17 +147,20 @@ set KUSARY_ADMIN_PASSWORD=strongpass</pre>
 
           <label class="adminLabel">
             <span>Заголовок</span>
-            <input id="tourismFormTitle" type="text" />
+            <input id="tourismFormTitle" type="text" placeholder="Например: ШахДаг" maxlength="200" />
           </label>
 
           <label class="adminLabel">
-            <span>Текст</span>
-            <textarea id="tourismFormBody" rows="8" class="adminTextarea"></textarea>
+            <span>Описание</span>
+            <textarea id="tourismFormBody" rows="5" placeholder="Например: где находится, что там интересного, как добраться…"></textarea>
           </label>
 
           <label class="adminLabel">
             <span>Фото (можно несколько)</span>
             <input id="tourismFormImages" type="file" accept="image/*" multiple />
+            <small style="opacity:.7; display:block; margin-top:6px; line-height:1.3">
+              Фото автоматически приводятся к формату 16:9 и улучшаются по качеству (оптимизация при сохранении).
+            </small>
           </label>
 
           <label class="authRemember" style="margin-top:6px">
