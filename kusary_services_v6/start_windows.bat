@@ -6,8 +6,8 @@ rem ==========================
 rem  ADMIN / MODERATION SETUP
 rem ==========================
 rem Первый админ создаётся (или назначается) при запуске, если заданы переменные:
-rem   set "KUSARY_ADMIN_IDENTIFIER=admin"
-rem   set "KUSARY_ADMIN_PASSWORD=strongpass"
+set "KUSARY_ADMIN_IDENTIFIER=admin"
+set "KUSARY_ADMIN_PASSWORD=strongpass"
 rem
 rem Премодерация объявлений (новые объявления будут «На модерации»):
 rem   set "KUSARY_PREMODERATION=1"
