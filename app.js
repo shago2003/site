@@ -1858,19 +1858,44 @@ function renderGrid() {
         return;
       }
 
+      const getTourismBaseCover = (key) => {
+        const cfg = TOURISM_GALLERY[key] || {};
+        const imgs = Array.isArray(cfg.images) ? cfg.images.filter(Boolean) : [];
+        return imgs[0] || "";
+      };
+
+      const applyPlaceCardBg = (cardEl, src) => {
+        if (!cardEl) return;
+        if (src) {
+          cardEl.style.backgroundImage = `url('${src}')`;
+          cardEl.classList.remove("placeCard--noimg");
+        } else {
+          cardEl.style.backgroundImage = "";
+          cardEl.classList.add("placeCard--noimg");
+        }
+      };
+
       const places = [
-        { key: "mountains", title: t("tourismMountains"), bg: "./image/shahdag_1.jpg" },
-        { key: "parks", title: t("tourismParks"), bg: "./image/tourism_parks.png" },
-        { key: "sights", title: t("tourismSights"), bg: "./image/tourism_sights.png" },
-        { key: "restaurants", title: t("tourismRestaurants"), bg: "./image/tourism_restaurants.jpg" },
-        { key: "hotels", title: t("tourismHotels"), bg: "./image/tourism_hotels.jpg" },
-        { key: "relax", title: t("tourismRelax"), bg: "./image/tourism_hotels.jpg" }
+        { key: "mountains", title: t("tourismMountains") },
+        { key: "parks", title: t("tourismParks") },
+        { key: "sights", title: t("tourismSights") },
+        { key: "restaurants", title: t("tourismRestaurants") },
+        { key: "hotels", title: t("tourismHotels") },
+        { key: "relax", title: t("tourismRelax") }
       ];
+
+      // Рисуем вкладки (обложка = первое фото из слайд‑шоу этой вкладки).
+      // Если фото ещё нет — обложка пустая (пользователь добавит из админки через публикации).
+      const token = Date.now();
+      state._tourismCoversToken = token;
 
       places.forEach((p) => {
         const card = document.createElement("div");
         card.className = "placeCard";
-        card.style.backgroundImage = `url('${p.bg}')`;
+        card.setAttribute("data-place", p.key);
+
+        // базовая обложка (по умолчанию есть только у гор)
+        applyPlaceCardBg(card, getTourismBaseCover(p.key));
 
         card.innerHTML = `
           <div class="placeCard__overlay">
@@ -1888,6 +1913,25 @@ function renderGrid() {
 
         elGrid.appendChild(card);
       });
+
+      // Дотягиваем обложки из опубликованных публикаций (берём 1‑е фото самой свежей публикации).
+      (async () => {
+        try{
+          const keys = places.map(x => x.key);
+          await Promise.all(keys.map(async (k) => {
+            try{
+              const posts = await apiJson(`/api/tourism/posts?section=${encodeURIComponent(k)}&limit=1`);
+              const p0 = Array.isArray(posts) ? posts[0] : null;
+              const imgs = Array.isArray(p0?.images) ? p0.images.filter(Boolean) : [];
+              const cover = imgs[0] || getTourismBaseCover(k);
+              // если пользователь уже ушёл со страницы — не трогаем DOM
+              if (state._tourismCoversToken !== token) return;
+              const el = elGrid.querySelector(`.placeCard[data-place="${k}"]`);
+              applyPlaceCardBg(el, cover);
+            }catch{}
+          }));
+        }catch{}
+      })();
 
       return;
     }
@@ -2012,23 +2056,23 @@ const TOURISM_GALLERY = {
     address: "Şahdağ Mountain Resort"
   },
   parks: {
-    images: ["./image/tourism_parks.png"],
+    images: [],
     address: "Qusar park"
   },
   sights: {
-    images: ["./image/tourism_sights.png"],
+    images: [],
     address: "Qusar, Azerbaijan"
   },
   restaurants: {
-    images: ["./image/tourism_restaurants_custom.jpg","./image/tourism_restaurants.jpg"],
+    images: [],
     address: "Qusar restoran"
   },
   hotels: {
-    images: ["./image/tourism_hotels_custom.jpg","./image/tourism_hotels.jpg"],
+    images: [],
     address: "Qusar hotel"
   },
   relax: {
-    images: ["./image/tourism.png"],
+    images: [],
     address: "Qusar"
   }
 };
@@ -2246,16 +2290,20 @@ function renderTourismGallery(placeKey, hostEl){
       const postSlides = [];
       arr.forEach((p) => {
         const imgs = Array.isArray(p?.images) ? p.images.filter(Boolean) : [];
-        const firstImg = imgs[0] || "";
-        if (!firstImg) return;
+        if (imgs.length === 0) return;
 
         const title = String(p?.title || "").trim() || "Публикация";
         const body = String(p?.body || "");
-        postSlides.push({
-          src: firstImg,
-          title,
-          desc: makeSnippet(body, 160),
-          post: p
+
+        // ВАЖНО: если в публикации несколько фото — каждое становится отдельным слайдом
+        imgs.forEach((src) => {
+          if (!src) return;
+          postSlides.push({
+            src,
+            title,
+            desc: makeSnippet(body, 160),
+            post: p
+          });
         });
       });
 
@@ -2404,7 +2452,6 @@ function renderTourismPlacePage(placeKey) {
   wrap.className = "tourismSection";
   wrap.innerHTML = `
     <div id="tourismGalleryHost"></div>
-    <div class="tourismPostList" id="tourismPostList" style="display:none;"></div>
   `;
   elGrid.appendChild(wrap);
 
@@ -2412,9 +2459,8 @@ function renderTourismPlacePage(placeKey) {
   const host = wrap.querySelector("#tourismGalleryHost");
   renderTourismGallery(placeKey, host);
 
-  const postList = wrap.querySelector("#tourismPostList");
-  loadAndRenderTourismPosts(placeKey, postList);
-
+  // ВАЖНО: в Туризме оставляем только верхнюю галерею (слайд‑шоу).
+  // Список публикаций снизу отключён по требованию пользователя.
 }
 
 
